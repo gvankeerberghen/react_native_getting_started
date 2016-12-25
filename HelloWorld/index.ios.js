@@ -291,4 +291,30 @@ class SimpleNavigationApp extends Component {
   }
 }
 
-AppRegistry.registerComponent('HelloWorld', () => SimpleNavigationApp);
+class SampleApp extends Component {
+  render() {
+    return (
+      <View style={stylesSample.container}>
+        <Text style={stylesSample.fact}>You're looking at this.</Text>
+      </View>
+    );
+  }
+}
+
+const stylesSample = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'slateblue',
+  },
+
+  fact: {
+    fontFamily: 'Al Nile',
+    fontSize: 42,
+    color: 'gold',
+    textAlign: 'center'
+  }
+});
+
+AppRegistry.registerComponent('HelloWorld', () => SampleApp);
