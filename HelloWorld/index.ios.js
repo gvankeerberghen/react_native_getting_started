@@ -17,6 +17,24 @@ class Greeting extends Component {
   }
 }
 
+class BlinkingText extends Component {
+  constructor(props){
+    super(props);
+    this.state = {showText: true};
+
+    setInterval(() => {
+      this.setState({ showText: !this.state.showText })
+    }, 1000);
+  }
+
+  render() {
+    let display = this.state.showText ? this.props.text : ' ';
+    return (
+      <Text> {display} </Text>
+    );
+  } 
+}
+
 class Bananas extends Component {
   render() {
     let pic = {
@@ -27,6 +45,7 @@ class Bananas extends Component {
         <Image source={pic} style={{width: 193, height: 110}}/>
         <Greeting name='Rexxar' />
         <Greeting name='Guillaume' />
+        <BlinkingText text='Whoop whoop' />
       </View>
     );
   }
