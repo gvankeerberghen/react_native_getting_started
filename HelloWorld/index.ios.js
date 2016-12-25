@@ -193,7 +193,6 @@ class ListViewBasics extends Component {
     };
   }
   render() {
-    movies = getMoviesFromApiAsync();
     return (
       <View style={{flex: 1, paddingTop: 22}}>
         <ListView
@@ -206,7 +205,20 @@ class ListViewBasics extends Component {
 }
 
 class ListViewMovies extends Component {
-  // Initialize the hardcoded data
+  /* NB
+    By default, iOS will block any request that's not encrypted using SSL.
+    If you need to fetch from a cleartext URL (one that begins with http) 
+    you will first need to add an App Transport Security exception. 
+
+    If you know ahead of time what domains you will need access to, 
+    it is more secure to add exceptions just for those domains; 
+    if the domains are not known until runtime you can disable ATS completely. 
+    Note however that from January 2017, Apple's App Store review will require 
+    reasonable justification for disabling ATS.
+
+    See Apple's documentation for more information.
+  */
+
   constructor(props) {
     super(props);
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -234,7 +246,6 @@ class ListViewMovies extends Component {
   }
 
   render() {
-    movies = getMoviesFromApiAsync();
     return (
       <View style={{flex: 1, paddingTop: 22}}>
         <ListView
@@ -244,18 +255,6 @@ class ListViewMovies extends Component {
       </View>
     );
   }
-}
-
-function getMoviesFromApiAsync() {
-  return fetch('https://facebook.github.io/react-native/movies.json')
-    .then((response) => response.json())
-    .then((responseJson) => {
-      console.log(responseJson.movies)
-      return responseJson.movies;
-    })
-    .catch((error) => {
-      console.error(error);
-    });
 }
 
 AppRegistry.registerComponent('HelloWorld', () => ListViewMovies);
