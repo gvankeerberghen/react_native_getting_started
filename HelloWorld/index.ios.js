@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AppRegistry, Text, Image, View, StyleSheet} from 'react-native';
+import { AppRegistry, Text, Image, View, StyleSheet, TextInput} from 'react-native';
 
 const styles = StyleSheet.create({
   bigblue: {
@@ -118,4 +118,27 @@ class AlignItemsBasics extends Component {
   }
 };
 
-AppRegistry.registerComponent('HelloWorld', () => AlignItemsBasics);
+class PizzaTranslator extends Component {
+  // More at https://facebook.github.io/react/docs/forms.html
+  constructor(props) {
+    super(props);
+    this.state = {text: ''};
+  }
+
+  render() {
+    return (
+      <View style={{padding: 10}}>
+        <TextInput
+          style={{height: 40}}
+          placeholder="Type here to translate!"
+          onChangeText={(text) => this.setState({text})}
+        />
+        <Text style={{padding: 10, fontSize: 42}}>
+          {this.state.text.split(' ').map((word) => word && '🍕').join(' ')}
+        </Text>
+      </View>
+    );
+  }
+}
+
+AppRegistry.registerComponent('HelloWorld', () => PizzaTranslator);
