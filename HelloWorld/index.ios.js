@@ -1,5 +1,17 @@
 import React, { Component } from 'react';
-import { AppRegistry, Text, Image, View } from 'react-native';
+import { AppRegistry, Text, Image, View, StyleSheet} from 'react-native';
+
+const styles = StyleSheet.create({
+  bigblue: {
+    color: 'blue',
+    fontWeight: 'bold',
+    fontSize: 30,
+  },
+  red: {
+    color: 'red',
+  },
+});
+
 
 class HelloWorld extends Component {
   render() {
@@ -12,7 +24,7 @@ class HelloWorld extends Component {
 class Greeting extends Component {
   render() {
     return (
-      <Text>Hello {this.props.name}!</Text>
+      <Text style={this.props.style}>Hello {this.props.name}!</Text>
     );
   }
 }
@@ -43,7 +55,7 @@ class Bananas extends Component {
     return (
       <View style={{alignItems: 'center'}}>
         <Image source={pic} style={{width: 193, height: 110}}/>
-        <Greeting name='Rexxar' />
+        <Greeting name='Rexxar' style={styles.bigblue} />
         <Greeting name='Guillaume' />
         <BlinkingText text='Whoop whoop' />
       </View>
