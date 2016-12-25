@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
-import { AppRegistry, Text, Image } from 'react-native';
+import { AppRegistry, Text, Image, View } from 'react-native';
 
 class HelloWorld extends Component {
   render() {
     return (
       <Text>Hello world!</Text>
+    );
+  }
+}
+
+class Greeting extends Component {
+  render() {
+    return (
+      <Text>Hello {this.props.name}!</Text>
     );
   }
 }
@@ -15,7 +23,11 @@ class Bananas extends Component {
       uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
     };
     return (
-      <Image source={pic} style={{width: 193, height: 110}}/>
+      <View style={{alignItems: 'center'}}>
+        <Image source={pic} style={{width: 193, height: 110}}/>
+        <Greeting name='Rexxar' />
+        <Greeting name='Guillaume' />
+      </View>
     );
   }
 }
