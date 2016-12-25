@@ -4,7 +4,7 @@ import { View, Text, TouchableHighlight } from 'react-native';
 export default class MyScene extends Component {
   render() {
     return (
-      <View>
+      <View style={{flex: 1, padding: 22}}>
         <Text>Current Scene: {this.props.title}</Text>
 
         <TouchableHighlight onPress={this.props.onForward}>
