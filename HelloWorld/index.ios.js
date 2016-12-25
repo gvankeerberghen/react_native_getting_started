@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AppRegistry, Text, Image, View, StyleSheet, TextInput, ScrollView} from 'react-native';
+import { AppRegistry, Text, Image, View, StyleSheet, TextInput, ScrollView, ListView} from 'react-native';
 
 const styles = StyleSheet.create({
   bigblue: {
@@ -181,4 +181,81 @@ class IScrolledDownAndWhatHappenedNextShockedMe extends Component {
   }
 }
 
-AppRegistry.registerComponent('HelloWorld', () => IScrolledDownAndWhatHappenedNextShockedMe);
+class ListViewBasics extends Component {
+  // Initialize the hardcoded data
+  constructor(props) {
+    super(props);
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    this.state = {
+      dataSource: ds.cloneWithRows([
+        'John', 'Joel', 'James', 'Jimmy', 'Jackson', 'Jillian', 'Julie', 'Devin'
+      ])
+    };
+  }
+  render() {
+    movies = getMoviesFromApiAsync();
+    return (
+      <View style={{flex: 1, paddingTop: 22}}>
+        <ListView
+          dataSource={this.state.dataSource}
+          renderRow={(rowData) => <Text>{rowData}</Text>}
+        />
+      </View>
+    );
+  }
+}
+
+class ListViewMovies extends Component {
+  // Initialize the hardcoded data
+  constructor(props) {
+    super(props);
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    this.state = {
+      dataSource: ds.cloneWithRows([{ title: 'Loading movies', releaseYear: null }])
+    };
+
+    setInterval(() => {
+      fetch('https://facebook.github.io/react-native/movies.json')
+      .then((response) => response.json())
+      .then((responseJson) => {
+        console.log(responseJson.movies)
+        return responseJson.movies;
+      })
+      .then( (movies) => {
+        this.setState({
+          dataSource: this.state.dataSource.cloneWithRows(movies),
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+    }, 2000);
+
+  }
+
+  render() {
+    movies = getMoviesFromApiAsync();
+    return (
+      <View style={{flex: 1, paddingTop: 22}}>
+        <ListView
+          dataSource={this.state.dataSource}
+          renderRow={(rowData) => <Text>{rowData.title} {rowData.releaseYear ? '(' + rowData.releaseYear + ')' : '' }</Text>}
+        />
+      </View>
+    );
+  }
+}
+
+function getMoviesFromApiAsync() {
+  return fetch('https://facebook.github.io/react-native/movies.json')
+    .then((response) => response.json())
+    .then((responseJson) => {
+      console.log(responseJson.movies)
+      return responseJson.movies;
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+
+AppRegistry.registerComponent('HelloWorld', () => ListViewMovies);
