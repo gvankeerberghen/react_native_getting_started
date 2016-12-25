@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { AppRegistry, Text, Image, View, StyleSheet, TextInput, ScrollView, ListView} from 'react-native';
+import { AppRegistry, Text, Image, View, StyleSheet, TextInput, ScrollView, ListView, Navigator} from 'react-native';
+
+import MyScene from './scenes/MyScene';
 
 const styles = StyleSheet.create({
   bigblue: {
@@ -226,7 +228,7 @@ class ListViewMovies extends Component {
       dataSource: ds.cloneWithRows([{ title: 'Loading movies', releaseYear: null }])
     };
 
-    setInterval(() => {
+    setTimeout(() => {
       fetch('https://facebook.github.io/react-native/movies.json')
       .then((response) => response.json())
       .then((responseJson) => {
@@ -257,4 +259,36 @@ class ListViewMovies extends Component {
   }
 }
 
-AppRegistry.registerComponent('HelloWorld', () => ListViewMovies);
+
+class SimpleNavigationApp extends Component {
+  render() {
+    return (
+      <Navigator
+        initialRoute={{ title: 'My Initial Scene', index: 0 }}
+        renderScene={(route, navigator) =>
+          <MyScene
+            title={route.title}
+
+            // Function to call when a new scene should be displayed
+            onForward={() => {    
+              const nextIndex = route.index + 1;
+              navigator.push({
+                title: 'Scene ' + nextIndex,
+                index: nextIndex,
+              });
+            }}
+
+            // Function to call to go back to the previous scene
+            onBack={() => {
+              if (route.index > 0) {
+                navigator.pop();
+              }
+            }}
+          />
+        }
+      />
+    )
+  }
+}
+
+AppRegistry.registerComponent('HelloWorld', () => SimpleNavigationApp);
