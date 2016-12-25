@@ -3,7 +3,7 @@ import { AppRegistry, Text, Image, View, StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
   bigblue: {
-    color: 'blue',
+    color: 'powderblue',
     fontWeight: 'bold',
     fontSize: 30,
   },
@@ -42,7 +42,7 @@ class BlinkingText extends Component {
   render() {
     let display = this.state.showText ? this.props.text : ' ';
     return (
-      <Text> {display} </Text>
+      <Text style={this.props.style}> {display} </Text>
     );
   } 
 }
@@ -53,11 +53,15 @@ class Bananas extends Component {
       uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
     };
     return (
-      <View style={{alignItems: 'center'}}>
-        <Image source={pic} style={{width: 193, height: 110}}/>
-        <Greeting name='Rexxar' style={styles.bigblue} />
-        <Greeting name='Guillaume' />
-        <BlinkingText text='Whoop whoop' />
+      <View style={{flex:1}}>
+        <View style={{flex: 1, backgroundColor: 'powderblue'}} />
+        <View style={{flex: 2, backgroundColor: 'skyblue'}} />
+        <View style={{flex: 3, alignItems:'center', backgroundColor: 'steelblue'}}>
+          <Image source={pic} style={{width: 193, height: 110}}/>
+          <Greeting name='Rexxar' style={styles.bigblue} />
+          <Greeting name='Guillaume' />
+          <BlinkingText text='Whoop whoop' style={styles.red}/>
+        </View>
       </View>
     );
   }
